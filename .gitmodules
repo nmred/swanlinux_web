@@ -1,0 +1,6 @@
+[submodule "lib/sf"]
+	path = lib/sf
+	url = git://github.com/nmred/sf1.git
+[submodule "data/swan_docs"]
+	path = data/swan_docs
+	url = git://github.com/nmred/swan_docs.git
