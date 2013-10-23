@@ -12,47 +12,38 @@
 // | $_SWANBR_WEB_DOMAIN_$
 // +---------------------------------------------------------------------------
  
+namespace lib\ui\action\user;
+use lib\ui\action\sw_action;
 
 /**
 +------------------------------------------------------------------------------
-* 核心处理程序 全局变量
+* sw_default 
 +------------------------------------------------------------------------------
-*  
+* 
+* @uses sw
+* @uses _action
+* @package 
 * @version $_SWANBR_VERSION_$
 * @copyright $_SWANBR_COPYRIGHT_$
 * @author $_SWANBR_AUTHOR_$ 
 +------------------------------------------------------------------------------
 */
+class sw_index extends sw_action
+{
+	// {{{ functions
+	// {{{ public function action_default()
 
-// {{{  绝对路劲
-define('PATH_SWWEB_BASE', realpath(dirname(__FILE__)));
-	define('PATH_SWWEB_LIB', PATH_SWWEB_BASE . '/lib/');
-    define('PATH_SWWEB_TPL', PATH_SWWEB_BASE . '/tpl/');
-    define('PATH_SWWEB_TMP', PATH_SWWEB_BASE . '/tmp/');
-		define('PATH_SWWEB_COMPILE', PATH_SWWEB_TMP . 'compile/');
-		define('PATH_SWWEB_CACHE', PATH_SWWEB_TMP . 'cache/');
-		define('PATH_SWWEB_MKCACHE', PATH_SWWEB_TMP . 'mkcache/');
-    define('PATH_SWWEB_DATA', PATH_SWWEB_BASE . '/data/'); 
-
-// }}}
-// {{{ 参数配置
-// {{{ 参数设置
-
-// 默认时区设置
-define('SWAN_TIMEZONE_DEFAULT', 'Asia/Chongqing');
-
-// }}}
-
-require_once PATH_SWWEB_LIB . 'sf/swanphp.php';
-
-// 设置命名空间
-require_once PATH_SF_LIB . 'loader/sw_standard_auto_loader.class.php';
-$autoloader = new swan\loader\sw_standard_auto_loader(
-	array(
-		'namespaces' => array(
-			'swan' => PATH_SF_BASE,
-			'lib' => '.',
-		),
-));
-$autoloader->register();
-
+	/**
+	 * action_default 
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function action_default()
+	{
+		return $this->render('index.html', array());	
+	}
+	
+	// }}}
+	// }}}	
+}
