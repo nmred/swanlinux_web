@@ -12,7 +12,7 @@
 // | $_SWANBR_WEB_DOMAIN_$
 // +---------------------------------------------------------------------------
 
-namespace ui\router;
+namespace lib\ui\router;
 
 /**
 * 路由-默认路由

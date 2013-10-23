@@ -12,7 +12,7 @@
 // | $_SWANBR_WEB_DOMAIN_$
 // +---------------------------------------------------------------------------
  
-namespace ui\action\user;
+namespace lib\ui\action\user;
 use swan\controller\sw_action;
 
 /**
