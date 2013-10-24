@@ -33,6 +33,7 @@ define('PATH_SWWEB_BASE', realpath(dirname(__FILE__)));
 		define('PATH_SWWEB_CACHE', PATH_SWWEB_TMP . 'cache/');
 		define('PATH_SWWEB_MKCACHE', PATH_SWWEB_TMP . 'mkcache/');
     define('PATH_SWWEB_DATA', PATH_SWWEB_BASE . '/data/'); 
+		define('PATH_SWWEB_DOCS_DATA', PATH_SWWEB_DATA . '/swan_docs/'); 
 
 // }}}
 // {{{ 参数配置
@@ -40,6 +41,7 @@ define('PATH_SWWEB_BASE', realpath(dirname(__FILE__)));
 
 // 默认时区设置
 define('SWAN_TIMEZONE_DEFAULT', 'Asia/Chongqing');
+define('SWWEB_ENCODE', 'utf-8');
 
 // }}}
 

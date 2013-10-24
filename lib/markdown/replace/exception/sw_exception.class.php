@@ -12,41 +12,18 @@
 // | $_SWANBR_WEB_DOMAIN_$
 // +---------------------------------------------------------------------------
  
-namespace lib\ui\action\user;
-use lib\ui\action\sw_action;
-use lib\markdown\sw_markdown;
+namespace lib\markdown\replace\exception;
+use lib\exception\sw_exception as sw_ex;
 
 /**
-+------------------------------------------------------------------------------
-* sw_default 
-+------------------------------------------------------------------------------
+* 异常处理基类 
 * 
-* @uses sw
-* @uses _action
-* @package 
+* @uses Exception
+* @package swan 
 * @version $_SWANBR_VERSION_$
 * @copyright $_SWANBR_COPYRIGHT_$
 * @author $_SWANBR_AUTHOR_$ 
-+------------------------------------------------------------------------------
 */
-class sw_index extends sw_action
+class sw_exception extends sw_ex
 {
-	// {{{ functions
-	// {{{ public function action_default()
-
-	/**
-	 * action_default 
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function action_default()
-	{
-		$markdown = new sw_markdown(PATH_SWWEB_DOCS_DATA);
-		$list = $markdown->get_article_list();
-		return $this->render('index.html', array('list' => $list));	
-	}
-	
-	// }}}
-	// }}}	
 }
