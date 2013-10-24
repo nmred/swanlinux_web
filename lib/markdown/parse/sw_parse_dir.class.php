@@ -110,7 +110,7 @@ class sw_parse_dir
 			}
 
 			$fileinfo['name']  = $file_info->getFilename();
-			$fileinfo['path']  = $file_info->getPathname();
+			$fileinfo['path']  = substr($file_info->getPathname(), strlen($this->__root_directory));
 			$fileinfo['ctime'] = $file_info->getCTime();
 			$this->__file_list[] = $fileinfo;
 		}

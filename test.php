@@ -3,6 +3,11 @@
 require_once 'core.php';
 
 use lib\markdown\sw_markdown;
+use lib\markdown\parse\sw_parse_dir;
 
-$markdown = new sw_markdown('data/swan_docs');
-var_dump($markdown->get_article_list());
+$dir = new sw_parse_dir();
+$dir->set_root_directory('/usr/local/dev_swan/web/data/swan_docs');
+
+$list = $dir->get_file_list();
+
+var_dump($list);

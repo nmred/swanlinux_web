@@ -42,8 +42,15 @@ class sw_index extends sw_action
 	 */
 	public function action_default()
 	{
+		$page = $this->get_request()->get_query('page', 0);
 		$markdown = new sw_markdown(PATH_SWWEB_DOCS_DATA);
 		$list = $markdown->get_article_list();
+		foreach ($list as $key => $value) {
+			$list[$key]['path'] = urlencode($value['path']);
+			$list[$key]['month'] = date('m d', $value['mtime']);	
+			$list[$key]['year']  = date('Y', $value['mtime']);	
+		}
+
 		return $this->render('index.html', array('list' => $list));	
 	}
 	

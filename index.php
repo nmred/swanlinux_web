@@ -24,8 +24,10 @@ $controller->add_controller_namespace('lib\ui\action\user', 'user');
 
 // 设置路由
 $road_map = array(
-	'user' => array('default' => true),
-	'user' => array('index' => true),
+	'user' => array(
+		'index' => true,
+		'detail' => true,
+	),
 );
 sw_router::set_road_map($road_map);
 $router = new sw_router();

@@ -62,6 +62,14 @@ class sw_markdown
 	 */
 	protected $__offset = null;
 
+	/**
+	 * __root_directory 
+	 * 
+	 * @var mixed
+	 * @access protected
+	 */
+	protected $__root_directory = null;
+
 	// }}}
 	// {{{ functions
 	// {{{ public function __construct()
@@ -75,7 +83,8 @@ class sw_markdown
 	public function __construct($root_directory)
 	{
 		$this->__parse_dir = new sw_parse_dir();
-		$this->__parse_dir->set_root_directory($root_directory);	
+		$this->__root_directory = $root_directory;
+		$this->__parse_dir->set_root_directory($this->__root_directory);	
 		$this->__lists = $this->__parse_dir->get_file_list();	
 	}
 
@@ -98,7 +107,7 @@ class sw_markdown
 
 		$data = array();
 		foreach ($list as $key => $value) {
-			$fileinfo = $this->get_article_content($value['path']);
+			$fileinfo = $this->get_article_content($this->__root_directory . $value['path']);
 			$data[$key]['title'] = $fileinfo['title'];
 			$data[$key]['desc']  = $fileinfo['desc'];
 			$data[$key]['mtime'] = $fileinfo['mtime'];

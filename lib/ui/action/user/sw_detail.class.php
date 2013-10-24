@@ -14,6 +14,7 @@
  
 namespace lib\ui\action\user;
 use lib\ui\action\sw_action;
+use lib\markdown\sw_markdown;
 
 /**
 +------------------------------------------------------------------------------
@@ -28,7 +29,7 @@ use lib\ui\action\sw_action;
 * @author $_SWANBR_AUTHOR_$ 
 +------------------------------------------------------------------------------
 */
-class sw_default extends sw_action
+class sw_detail extends sw_action
 {
 	// {{{ functions
 	// {{{ public function action_default()
@@ -41,7 +42,15 @@ class sw_default extends sw_action
 	 */
 	public function action_default()
 	{
-		$this->json_stdout(array('hello swanphp'));	
+		$path = $this->get_request()->get_query('path', null);
+		$path = PATH_SWWEB_DOCS_DATA . urldecode($path);
+		$markdown = new sw_markdown(PATH_SWWEB_DOCS_DATA);
+		$article = $markdown->get_article_content($path);
+
+		$article['year']  = date('Y', $article['mtime']);
+		$article['month'] = date('m d', $article['mtime']);
+
+		return $this->render('detail.html', array('article' => $article));	
 	}
 	
 	// }}}
