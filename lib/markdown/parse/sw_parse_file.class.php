@@ -28,6 +28,12 @@ use lib\markdown\parse\exception\sw_exception;
 class sw_parse_file
 {
 	// {{{ consts
+
+	/**
+	 *  是否开启缓存 
+	 */
+	const IS_CACHE = 0;
+
 	// }}}
 	// {{{ members
 
@@ -143,7 +149,7 @@ class sw_parse_file
 		$data['header'] = $this->get_header();
 
 		$this->__cache = $data;
-		sw_cache::set_cache_content($this->__src_path, $data);
+		self::IS_CACHE && sw_cache::set_cache_content($this->__src_path, $data);
 
 		return $this->__html;
 	}
