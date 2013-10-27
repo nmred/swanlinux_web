@@ -193,6 +193,7 @@ class sw_parse_file
 		$title = '';
 		foreach ($header as $value) {		
 			if ($min_level > $value['level']) {
+				$min_level = $value['level'];
 				$title = $value['text'];
 			}
 		}
