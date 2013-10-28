@@ -25,15 +25,16 @@
 */
 
 // {{{  绝对路劲
-define('PATH_SWWEB_BASE', realpath(dirname(__FILE__)));
+define('PATH_SWWEB_BASE', dirname(__FILE__));
 	define('PATH_SWWEB_LIB', PATH_SWWEB_BASE . '/lib/');
     define('PATH_SWWEB_TPL', PATH_SWWEB_BASE . '/tpl/');
     define('PATH_SWWEB_TMP', PATH_SWWEB_BASE . '/tmp/');
 		define('PATH_SWWEB_COMPILE', PATH_SWWEB_TMP . 'compile/');
 		define('PATH_SWWEB_CACHE', PATH_SWWEB_TMP . 'cache/');
 		define('PATH_SWWEB_MKCACHE', PATH_SWWEB_TMP . 'mkcache/');
-    define('PATH_SWWEB_DATA', PATH_SWWEB_BASE . '/data/'); 
-		define('PATH_SWWEB_DOCS_DATA', PATH_SWWEB_DATA . '/swan_docs/'); 
+    define('PATH_SWWEB_DATA', './data/'); 
+		define('PATH_SWWEB_DOCS_DATA', PATH_SWWEB_DATA . 'swan_docs/'); 
+			define('PATH_SWWEB_DOCS_IMG', PATH_SWWEB_DOCS_DATA . 'image/'); 
 
 // }}}
 // {{{ 参数配置

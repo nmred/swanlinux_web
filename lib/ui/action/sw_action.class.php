@@ -134,6 +134,8 @@ class sw_action extends sf_sw_action
 			// {{{ user
 
 			'URL_JS_USER'     => $tpl_static_user . 'js/',
+				'URL_JS_COMMON_USER'     => $tpl_static_user . 'js/common.js',
+				'URL_JS_INDEX_USER'     => $tpl_static_user . 'js/index.js',
 			'URL_CSS_USER'    => $tpl_static_user . 'css/',
 				'URL_CSS_COMMON_USER' => $tpl_static_user . 'css/common.css', 
 			'URL_IMAGE_USER'  => $tpl_static_user . 'image/',

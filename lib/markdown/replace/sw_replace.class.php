@@ -123,5 +123,95 @@ class sw_replace extends sw_abstract
 	}
 
 	// }}}
+	// {{{ public function images_reference_callback()
+
+	/**
+	 * 解析图片参考式回调
+	 *
+	 * @param array $matches
+	 * @access public
+	 * @return string
+	 */
+	public function images_reference_callback($matches)
+	{
+		$whole_match = $matches[1];
+		$alt_text    = $matches[2];
+		$link_id     = isset($matches[3]) ? $matches[3] : null;
+		$link_id     = strtolower((string) $link_id);
+
+		if ($link_id == "") {
+			$link_id = strtolower($alt_text);
+		}
+
+		$alt_text = $this->_encode_attribute($alt_text);
+		$url = $this->__element->get_url($link_id);
+		if (isset($url)) {
+			$url = $this->_format_imgurl($url);
+			$url = $this->_encode_attribute($url);
+			$result = "<img src=\"$url\" alt=\"$alt_text\"";
+			$title = $this->__element->get_url_title($link_id);
+			if (isset($title)) {
+				$title = $this->_encode_attribute($title);
+				$result .= " title=\"$title\"";
+			}
+			$result .= $this->__empty_element_suffix;
+			$result = \swan\markdown\swan\sw_hash::hash_part($result);
+		} else { // 没有 link id
+			$result = $whole_match;
+		}
+
+		return $result;
+	}
+
+	// }}}
+	// {{{ public function images_inline_callback()
+
+	/**
+	 * 解析图片的内行式回调
+	 *
+	 * @param array $matches
+	 * @access public
+	 * @return string
+	 */
+	public function images_inline_callback($matches)
+	{
+		$whole_match = $matches[1];
+		$alt_text    = $matches[2];
+		$url         = $matches[3] == '' ? $matches[4] : $matches[3];
+		$title       = isset($matches[7]) ? $matches[7] : null;
+
+		$alt_text = $this->_encode_attribute($alt_text);
+		$url = $this->_format_imgurl($url);
+		$url = $this->_encode_attribute($url);
+		$result = "<img src=\"$url\" alt=\"$alt_text\"";
+		if (isset($title)) {
+			$title = $this->_encode_attribute($title);
+			$result .= " title=\"$title\"";
+		}
+		$result .= $this->__empty_element_suffix;
+
+		return \swan\markdown\hash\sw_hash::hash_part($result);
+	}
+
+	// }}}
+	// {{{ protected function _format_imgurl()
+
+	/**
+	 * 格式化 URL 
+	 * 
+	 * @param string $url 
+	 * @access protected
+	 * @return string
+	 */
+	protected function _format_imgurl($url)
+	{
+		if (preg_match('/((https?|ftp|fict):[^\'">\s]+)/i', $url)) {
+			return $url;	
+		}
+		
+		return PATH_SWWEB_DOCS_IMG . ltrim($url, '/');	
+	}
+
+	// }}}
 	// }}}
 }

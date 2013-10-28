@@ -1,56 +1,78 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>swanweb</title>
-	<meta name="author" content="hfcorriez">
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="canonical" href="">
-	<link href="/favicon.png" rel="shortcut icon">
-	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<!--{{include file="./frame_js_css.html"}}-->
-</head>
-
-<body>
-	<header id="header" class="inner"><h1><a href="/">SWAN</a></h1>
-<nav id="main-nav"><ul class="main">
-	<li><a href="/">Blog</a></li>
-	<li><a href="">Archives</a></li>
-    <li><a href="/">Links</a></li>
-</ul>
-</nav>
-<nav id="mobile-nav">
-	<div class="alignleft menu">
-		<a class="button">Menu</a>
-		<div class="container"><ul class="main">
-	<li><a href="/">Blog</a></li>
-	<li><a href="/">Archives</a></li>
-    <li><a href="/">Links</a></li>
-</ul>
-</div>
-	</div>
-	<div class="alignright search">
-		<a class="button"></a>
-		<div class="container">
-			<form action="" method="get">
-				<input type="text" name="q" results="0">
-				<input type="hidden" name="q" value="">
-			</form>
+<style>
+.backToTop {
+    display: none;
+    width: 18px;
+    line-height: 1.2;
+    padding: 5px 0;
+    background-color: #000;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    position: fixed;
+    _position: absolute;
+    right: 10px;
+    bottom: 100px;
+    _bottom: "auto";
+    cursor: pointer;
+    opacity: .6;
+    filter: Alpha(opacity=60);
+}
+</style>
+<header id="header" class="inner"><h1><a href="/">SWAN</a></h1>
+	<nav id="main-nav"><ul class="main">
+		<li><a href="/">Blog</a></li>
+		<li><a href="">Archives</a></li>
+		<li><a href="/">Links</a></li>
+	</ul>
+	</nav>
+	<nav id="mobile-nav">
+		<div class="alignleft menu">
+			<a class="button">Menu</a>
+			<div class="container">
+				<ul class="main">
+					<li><a href="/">Blog</a></li>
+					<li><a href="/">Archives</a></li>
+					<li><a href="/">Links</a></li>
+				</ul>
+			</div>
 		</div>
-	</div>
-</nav>
-<nav id="sub-nav" class="alignright">
-	<div class="social">
-		<a class="google" href="" title="Google+">Google+</a>
-		<a class="twitter" href="" title="Twitter">Twitter</a>
-		<a class="github" href="" title="GitHub">GitHub</a>
-		<a class="rss" href="" title="RSS">RSS</a>
-	</div>
-	<form class="search" action="" method="get">
-		<input class="alignright" type="text" name="q" results="0">
-		<input type="hidden" name="q" value="">
-	</form>
-</nav>
+		<div class="alignright search">
+			<a class="button"></a>
+			<div class="container">
+				<form action="" method="get">
+					<input type="text" name="q" results="0">
+					<input type="hidden" name="q" value="">
+				</form>
+			</div>
+		</div>
+	</nav>
+	<nav id="sub-nav" class="alignright">
+		<div class="social">
+			<a class="google" href="" title="Google+">Google+</a>
+			<a class="twitter" href="" title="Twitter">Twitter</a>
+			<a class="github" href="" title="GitHub">GitHub</a>
+			<a class="rss" href="" title="RSS">RSS</a>
+		</div>
+		<form class="search" action="" method="get">
+			<input class="alignright" type="text" name="q" results="0">
+			<input type="hidden" name="q" value="">
+		</form>
+	</nav>
 </header>
-<div id="content" class="inner">
+<script type="text/javascript">
+(function() {
+    var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+        .text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+            $("html, body").animate({ scrollTop: 0 }, 120);
+    }), $backToTopFun = function() {
+        var st = $(document).scrollTop(), winh = $(window).height();
+        (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+        //IE6下的定位
+        if (!window.XMLHttpRequest) {
+            $backToTopEle.css("top", st + winh - 166);    
+        }
+    };
+    $(window).bind("scroll", $backToTopFun);
+    $(function() { $backToTopFun(); });
+})();
+</script>
