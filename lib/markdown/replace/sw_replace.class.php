@@ -144,18 +144,18 @@ class sw_replace extends sw_abstract
 		}
 
 		$alt_text = $this->_encode_attribute($alt_text);
-		$url = $this->__element->get_url($link_id);
+		$url = $this->__markdown->get_element()->get_url($link_id);
 		if (isset($url)) {
 			$url = $this->_format_imgurl($url);
 			$url = $this->_encode_attribute($url);
 			$result = "<img src=\"$url\" alt=\"$alt_text\"";
-			$title = $this->__element->get_url_title($link_id);
+			$title = $this->__markdown->get_element()->get_url_title($link_id);
 			if (isset($title)) {
 				$title = $this->_encode_attribute($title);
 				$result .= " title=\"$title\"";
 			}
 			$result .= $this->__empty_element_suffix;
-			$result = \swan\markdown\swan\sw_hash::hash_part($result);
+			$result = \swan\markdown\hash\sw_hash::hash_part($result);
 		} else { // 没有 link id
 			$result = $whole_match;
 		}

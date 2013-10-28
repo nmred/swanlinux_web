@@ -52,10 +52,21 @@ class sw_index extends sw_action
 	{
 		$page = (int)$this->get_request()->get_query('page', 1);
 		$markdown = new sw_markdown(PATH_SWWEB_DOCS_DATA);
+		$is_top = false;
 		
 		// 分页
 		$flag = 1; // 有前一页和后一页
 		$count = $markdown->count();
+		$config = $this->_read_config();
+		if (isset($config['top'])) {
+			$md_file = PATH_SWWEB_DOCS_DATA . $config['top'];
+			if (is_file($md_file)) {
+				$top_article = $markdown->get_article_content($md_file);
+				$count--;
+				$is_top = true;
+			}
+		}
+
 		$max_page = (int)ceil($count / self::PAGE_SIZE);
 		if ($page >= $max_page) {
 			$page = $max_page;
@@ -70,10 +81,25 @@ class sw_index extends sw_action
 		
 		$list = $markdown->get_article_list();
 		foreach ($list as $key => $value) {
-			$list[$key]['path'] = urlencode($value['path']);
+			if (isset($config['top']) 
+				&& $is_top
+				&& $value['path'] == $config['top']) {
+				unset($list[$key]);
+				continue;
+			}
+			$list[$key]['path']  = urlencode($value['path']);
 			$list[$key]['month'] = date('m d', $value['mtime']);	
 			$list[$key]['year']  = date('Y', $value['mtime']);	
 		}
+
+		// 处理置顶
+		if (isset($top_article) && !empty($top_article)) {
+			$top['path']  = urlencode($config['top']);
+			$top['month'] = date('m d', $value['mtime']);
+			$top['year']  = date('Y', $top_article['mtime']);
+			$top = array_merge($top, $top_article);
+		}
+		array_unshift($list, $top);
 		
 		$render['list'] = $list;
 		$render['flag'] = $flag;
@@ -81,6 +107,31 @@ class sw_index extends sw_action
 		return $this->render('index.html', $render);	
 	}
 	
+	// }}}
+	// {{{ protected function _read_config()
+
+	/**
+	 * 读取配置文件 
+	 * 
+	 * @access protected
+	 * @return void
+	 */
+	protected function _read_config()
+	{
+		$config_file = PATH_SWWEB_DOCS_DATA . '.config.ini';
+		if (!is_file($config_file)) {
+			return false;
+		}
+		
+		$config = parse_ini_file($config_file, true);
+
+		if (isset($config['list'])) {
+			return $config['list'];	
+		}
+
+		return false;
+	}
+
 	// }}}
 	// }}}	
 }
