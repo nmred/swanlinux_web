@@ -110,7 +110,7 @@ class sw_markdown
 			$fileinfo = $this->get_article_content($this->__root_directory . $value['path']);
 			$data[$key]['title'] = $fileinfo['title'];
 			$data[$key]['desc']  = $fileinfo['desc'];
-			$data[$key]['mtime'] = $fileinfo['mtime'];
+			$data[$key]['ctime'] = $fileinfo['ctime'];
 			$data[$key]['path']  = $value['path'];
 		}
 

@@ -47,8 +47,8 @@ class sw_detail extends sw_action
 		$markdown = new sw_markdown(PATH_SWWEB_DOCS_DATA);
 		$article = $markdown->get_article_content($path);
 
-		$article['year']  = date('Y', $article['mtime']);
-		$article['month'] = date('m d', $article['mtime']);
+		$article['year']  = date('Y', $article['ctime']);
+		$article['month'] = date('m d', $article['ctime']);
 
 		return $this->render('detail.html', array('article' => $article));	
 	}

@@ -88,15 +88,15 @@ class sw_index extends sw_action
 				continue;
 			}
 			$list[$key]['path']  = urlencode($value['path']);
-			$list[$key]['month'] = date('m d', $value['mtime']);	
-			$list[$key]['year']  = date('Y', $value['mtime']);	
+			$list[$key]['month'] = date('m d', $value['ctime']);	
+			$list[$key]['year']  = date('Y', $value['ctime']);	
 		}
 
 		// 处理置顶
 		if (isset($top_article) && !empty($top_article)) {
 			$top['path']  = urlencode($config['top']);
-			$top['month'] = date('m d', $value['mtime']);
-			$top['year']  = date('Y', $top_article['mtime']);
+			$top['month'] = date('m d', $value['ctime']);
+			$top['year']  = date('Y', $top_article['ctime']);
 			$top = array_merge($top, $top_article);
 		}
 		array_unshift($list, $top);

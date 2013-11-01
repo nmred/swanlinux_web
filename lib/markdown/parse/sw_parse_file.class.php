@@ -117,10 +117,10 @@ class sw_parse_file
 	public function parse()
 	{
 		$cache = sw_cache::get_cache_content($this->__src_path);
-		$mtime = filemtime($this->__src_path);
+		$ctime = filectime($this->__src_path);
 		if (null !== $cache
-			&& isset($cache['mtime']) 
-			&& $cache['mtime'] >= $mtime) {
+			&& isset($cache['ctime']) 
+			&& $cache['ctime'] >= $ctime) {
 			$this->__cache = $cache;
 			return isset($this->__cache['html']) ? $this->__cache['html'] : '';
 		}	
@@ -144,7 +144,7 @@ class sw_parse_file
 	protected function _parse_contents()
 	{
 		$this->__html   = $this->__markdown->to_html($this->__source_string);
-		$data['mtime']  = filemtime($this->__src_path);
+		$data['ctime']  = filectime($this->__src_path);
 		$data['html']   = $this->__html;
 		$data['header'] = $this->get_header();
 
