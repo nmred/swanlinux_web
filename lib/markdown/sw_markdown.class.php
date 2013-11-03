@@ -99,7 +99,8 @@ class sw_markdown
 	 */
 	public function get_article_list()
 	{
-		if ($this->__count && $this->__offset) {
+		usort($this->__lists, array($this, 'sort_ctime'));
+		if (isset($this->__count) && isset($this->__offset)) {
 			$list = array_slice($this->__lists, $this->__offset, $this->__count);	
 		} else {
 			$list = $this->__lists;	
@@ -170,6 +171,22 @@ class sw_markdown
 		$data = array_merge((array)$file_parse->get_cache(), $data); 
 
 		return $data;
+	}
+
+	// }}}
+	// {{{ public function sort_ctime()
+
+	/**
+	 * sort_ctime 
+	 * 
+	 * @param mixed $article1 
+	 * @param mixed $article2 
+	 * @access public
+	 * @return void
+	 */
+	public function sort_ctime($article1, $article2)
+	{
+		return $article1['ctime'] < $article2['ctime'];		
 	}
 
 	// }}}

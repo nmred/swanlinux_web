@@ -11,28 +11,19 @@
 // +---------------------------------------------------------------------------
 // | $_SWANBR_WEB_DOMAIN_$
 // +---------------------------------------------------------------------------
+ 
+namespace lib\github\api\exception;
+use lib\exception\sw_exception as sw_ex;
 
-require_once 'core.php'; 
-
-use swan\controller\sw_controller;
-use lib\ui\router\sw_router;
-
-$controller = sw_controller::get_instance();
-
-// 添加控制器命名空间
-$controller->add_controller_namespace('lib\ui\action\user', 'user');
-
-// 设置路由
-$road_map = array(
-	'user' => array(
-		'index' => true,
-		'index.do' => true,
-		'detail' => true,
-	),
-);
-sw_router::set_road_map($road_map);
-$router = new sw_router();
-$controller->get_router()->add_route('user', $router);
-
-// 分发
-$controller->dispatch();
+/**
+* 异常处理基类 
+* 
+* @uses Exception
+* @package swan 
+* @version $_SWANBR_VERSION_$
+* @copyright $_SWANBR_COPYRIGHT_$
+* @author $_SWANBR_AUTHOR_$ 
+*/
+class sw_exception extends sw_ex
+{
+}
