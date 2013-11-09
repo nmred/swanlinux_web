@@ -36,7 +36,7 @@ class sw_index extends sw_action
 	/**
 	 *  分页大小 
 	 */
-	const PAGE_SIZE = 3;
+	const PAGE_SIZE = 10;
 
 	// }}}
 	// {{{ functions
@@ -145,12 +145,12 @@ class sw_index extends sw_action
 		
 		$last_update_cache = PATH_SWWEB_TMP . 'last_update';
 		if (!is_file($last_update_cache)) {
-			file_put_contents($last_update_cache, time() - (3600 * 8));
+			$since = date('Y-m-d\TH:i:s\Z', time() - (3600 * 8));
+			file_put_contents($last_update_cache, $since);
 			return false;
 		}
 
-		$last_update_time = file_get_contents($last_update_cache);
-		$since = date('Y-m-d\TH:i:s\Z', $last_update_time);
+		$since = file_get_contents($last_update_cache);
 		$github = new \lib\github\sw_github();
 
 		$github->auth('nmred', trim($github_ini['github_token']));
@@ -159,7 +159,15 @@ class sw_index extends sw_action
 								'since' => $since,
 							));
 
+		$commits = array_reverse($commits);
 		foreach ($commits as $commit) {
+			if (isset($commit['commit']['committer']['date'])) {
+				if (strcmp($commit['commit']['committer']['date'], $since) >= 0) {
+					$since = $commit['commit']['committer']['date'];			
+					$since = date('Y-m-d\TH:i:s\Z', (strtotime(str_replace(array('Z', 'T'), '', $since)) + 1));
+				}
+			}
+
 			if (!isset($commit['sha'])) {
 				continue;	
 			}	
@@ -169,33 +177,46 @@ class sw_index extends sw_action
 			if (!isset($commit_info['files'])) {
 				continue;	
 			}
-			foreach ($commit_info['files'] as $file) {
+			$commit_info = array_reverse($commit_info['files']);
+			foreach ($commit_info as $file) {
 				if (!isset($file['filename'])) {
 					continue;	
 				}
 				
-				$content_info = $github->get_repos_api()
-									   ->get_contents('nmred', 'swan_docs', $file['filename']);
+				$input_path = PATH_SWWEB_DOCS_DATA . $file['filename'];
+				if (isset($file['status']) && 'removed' == $file['status']) { // 删除文件
+					if (is_file($input_path)) {
+						unlink($input_path);	
+						echo "sync file-> remove file: $input_path";
+					}						
+					continue;
+				}
+
+				try {
+					$content_info = $github->get_repos_api()
+										   ->get_contents('nmred', 'swan_docs', $file['filename']);
+				} catch (\lib\exception\sw_exception $e) {
+					echo $e->getMessage();
+					continue;
+				}
+
 				if (!isset($content_info['content'])
 						|| $content_info['type'] != 'file') {
 					continue;
 				}
 
 				$str = base64_decode($content_info['content']);
-
-				$input_path = PATH_SWWEB_DOCS_DATA . $file['filename'];
-
 				echo "sync file: $input_path.\n";
-
 				$dir = dirname($input_path);
 
 				if (!is_dir($dir)) {
-					mkdir($dir, 0644, true);
+					mkdir($dir, 0755, true);
 				}
 
 				file_put_contents($input_path, $str);
 			}
 		}
+		file_put_contents($last_update_cache, $since);
 	}
 
 	// }}}
