@@ -638,6 +638,10 @@ article .entry-content p {
 	margin-top:10px;
 	text-indent: 2em;
 }
+article .entry-content li p {
+	margin-top:10px;
+	text-indent: 0em;
+}
 article .entry-content h2 {
 	font-weight:300;
 	border-bottom:1px solid #ddd;
