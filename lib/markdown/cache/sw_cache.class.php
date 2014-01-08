@@ -106,8 +106,8 @@ class sw_cache
 	 */
 	public static function get_cache_name($key, $type = self::SRC_FILE)
 	{
-		$cache_path = \swan\sw_hash_dir::get_hash_dir($key);
-		\swan\sw_hash_dir::make_hash_dir(PATH_SWWEB_MKCACHE, $cache_path);
+		$cache_path = \swan\hash\sw_dir::get_hash_dir($key);
+		\swan\hash\sw_dir::make_hash_dir(PATH_SWWEB_MKCACHE, $cache_path);
 		$cache_path = PATH_SWWEB_MKCACHE . $cache_path;
 		$cache_name = md5($key);
 
